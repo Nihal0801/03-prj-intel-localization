@@ -322,19 +322,50 @@
   const ltrIntegrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB";
   const rtlIntegrity="sha384-CfCrinSRH2IR6a4e6fy2q6ioOX7O6Mtm1L9vRvFZ1trBncWmMePhzvafv7oIcWiW";
   function normalize(lang){return (lang||"en").toLowerCase().split("-")[0]}
+  let currentLanguage = null;
+
   function applyLanguage(lang){
-    const code=normalize(lang),isRtl=rtlLanguages.has(code),root=document.documentElement;
-    root.lang=code;root.dir=isRtl?"rtl":"ltr";
-    css.href=isRtl?rtl:ltr;css.integrity=isRtl?rtlIntegrity:ltrIntegrity;
+    const code=normalize(lang);
+    if(code===currentLanguage) return;
+
+    currentLanguage=code;
+    const isRtl=rtlLanguages.has(code);
+    const root=document.documentElement;
+
+    if(root.lang!==code) root.lang=code;
+    root.dir=isRtl?"rtl":"ltr";
+
+    const nextHref=isRtl?rtl:ltr;
+    const nextIntegrity=isRtl?rtlIntegrity:ltrIntegrity;
+
+    if(css.getAttribute("href")!==nextHref) css.setAttribute("href",nextHref);
+    if(css.getAttribute("integrity")!==nextIntegrity) css.setAttribute("integrity",nextIntegrity);
+
     document.querySelectorAll("[data-language]").forEach(btn=>{
       const on=normalize(btn.dataset.language)===code;
-      btn.classList.toggle("active",on);btn.setAttribute("aria-pressed",String(on));
+      btn.classList.toggle("active",on);
+      btn.setAttribute("aria-pressed",String(on));
     });
   }
-  document.querySelectorAll("[data-language]").forEach(btn=>btn.addEventListener("click",()=>applyLanguage(btn.dataset.language)));
+
+  document.querySelectorAll("[data-language]").forEach(btn=>{
+    btn.addEventListener("click",()=>applyLanguage(btn.dataset.language));
+  });
+
   applyLanguage(document.documentElement.lang||navigator.language);
-  new MutationObserver(m=>{if(m.some(x=>x.attributeName==="lang"))applyLanguage(document.documentElement.lang)})
-    .observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+
+  new MutationObserver(mutations=>{
+    const langChanged=mutations.some(m=>m.attributeName==="lang");
+    if(!langChanged) return;
+
+    const detected=normalize(document.documentElement.lang);
+    if(detected!==currentLanguage){
+      applyLanguage(detected);
+    }
+  }).observe(document.documentElement,{
+    attributes:true,
+    attributeFilter:["lang"]
+  });
 
   const form=document.getElementById("newsletter-form"),status=document.getElementById("form-status");
   form.addEventListener("submit",e=>{
