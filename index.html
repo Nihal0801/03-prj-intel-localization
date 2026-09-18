@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Intel sustainability timeline adapted for localization, RTL languages, responsive design, and accessibility.">
+  <title>Intel | Sustainability Through the Ages</title>
+
+  <link id="bootstrap-css"
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+  <style>
+    :root{
+      --intel-blue:#0068b5;--intel-dark:#003c71;--intel-navy:#002b49;
+      --intel-cyan:#8be8ff;--text:#111827;--muted:#536174;--border:#dbe5ec;
+      --page:#f7f9fb;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--page);color:var(--text);overflow-x:hidden}
+    a{color:inherit}
+    :focus-visible{outline:3px solid #ffbf47;outline-offset:3px}
+    .skip-link{position:absolute;left:1rem;top:-4rem;z-index:9999;background:#fff;color:#003c71;padding:.7rem 1rem;border-radius:.35rem;font-weight:700}
+    .skip-link:focus{top:1rem}
+    .language-toolbar{background:#002b49;color:#fff;position:relative;z-index:10}
+    .language-toolbar .btn-outline-light.active{background:#fff;color:#002b49}
+    .hero{min-height:620px;position:relative;display:flex;align-items:center;overflow:hidden;
+      background:radial-gradient(circle at 80% 30%,rgba(125,211,252,.28),transparent 30%),
+      linear-gradient(135deg,#003c71 0%,#0068b5 52%,#00a3f0 100%);color:#fff}
+    .hero-content{width:min(1180px,90%);margin:auto;position:relative;z-index:2;padding:80px 0}
+    .intel-logo{width:130px;height:auto;margin-bottom:55px;filter:brightness(0) invert(1)}
+    .eyebrow,.section-label{font-size:.78rem;font-weight:700;letter-spacing:2.5px}
+    .hero h1{font-size:clamp(3.4rem,7vw,6.8rem);line-height:.92;letter-spacing:-4px;max-width:850px;font-weight:700}
+    .hero h1 span{display:block;color:var(--intel-cyan)}
+    .hero-description{max-width:650px;font-size:1.15rem;line-height:1.75;margin-top:30px;color:rgba(255,255,255,.9)}
+    .explore-button{display:inline-block;margin-top:38px;padding:15px 25px;background:#fff;color:#0068b5;text-decoration:none;font-weight:700;border-radius:4px}
+    .hero-decoration{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.15)}
+    .decoration-one{width:600px;height:600px;right:-200px;top:-100px}
+    .decoration-two{width:430px;height:430px;right:-70px;bottom:-260px;background:rgba(255,255,255,.05)}
+
+    .timeline-intro{width:min(1180px,90%);margin:auto;padding:95px 0 50px}
+    .section-label{color:var(--intel-blue);margin-bottom:13px}
+    .timeline-intro h2,.commitment h2,.section-heading h2,.newsletter h2{font-size:clamp(2.2rem,4vw,4rem);letter-spacing:-2px}
+    .timeline-intro>p:last-child,.section-heading p,.newsletter-copy{color:var(--muted);line-height:1.7;max-width:720px}
+
+    .timeline{display:flex;gap:28px;width:100%;overflow-x:auto;padding:20px max(5vw,calc((100vw - 1180px)/2)) 55px;scroll-snap-type:x mandatory;scrollbar-color:#0068b5 #d9e5ef}
+    .timeline-card{flex:0 0 345px;background:#fff;min-height:520px;border-radius:14px;overflow:hidden;position:relative;scroll-snap-align:center;border:1px solid #e3e8ef;box-shadow:0 10px 30px rgba(15,41,68,.08);transition:.35s}
+    .timeline-card:hover,.timeline-card:focus-within{transform:translateY(-10px);box-shadow:0 25px 55px rgba(0,104,181,.18)}
+    .card-image{height:225px;overflow:hidden;position:relative;background:#0068b5}
+    .card-image:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,32,60,.62),transparent 55%)}
+    .card-image img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+    .timeline-card:hover .card-image img,.timeline-card:focus-within .card-image img{transform:scale(1.08)}
+    .year-badge{position:absolute;z-index:2;left:20px;bottom:18px;padding:7px 12px;background:rgba(255,255,255,.96);color:#0068b5;font-weight:700;border-radius:4px}
+    .card-content{padding:27px 25px 30px;position:relative}
+    .card-number{position:absolute;right:22px;top:22px;color:#a9cce4;font-weight:700;font-size:1.15rem}
+    .card-content h2{color:#0068b5;font-size:1.1rem;margin-bottom:7px}
+    .card-content h3{font-size:1.55rem;margin-bottom:13px}
+    .card-summary{color:var(--muted);line-height:1.5}
+    .card-details{max-height:0;opacity:0;overflow:hidden;transform:translateY(12px);transition:max-height .45s,opacity .35s,transform .35s,margin-top .35s}
+    .timeline-card:hover .card-details,.timeline-card:focus-within .card-details{max-height:220px;opacity:1;transform:none;margin-top:18px}
+    .card-details p{padding-top:17px;border-top:1px solid #e5e7eb;color:#435166;line-height:1.6;font-size:.93rem}
+    .timeline-help{width:min(1180px,90%);margin:5px auto 90px;display:flex;justify-content:center;gap:13px;color:var(--muted);font-size:.9rem}
+
+    .project3-section{background:#fff;padding:90px 0}
+    .section-heading{text-align:center;margin:0 auto 46px;max-width:820px}
+    .impact-card{height:100%;background:#f7fbfe;border:1px solid #d8e6f0;border-radius:14px;padding:28px;box-shadow:0 10px 30px rgba(15,41,68,.06)}
+    .impact-card h3{font-size:1.35rem;margin-top:18px}
+    .impact-card p{color:var(--muted);line-height:1.7}
+    .impact-icon{font-size:2rem;color:#0068b5}
+    .learn-more{font-weight:700}
+
+    .faq-section{background:#eef5fa;padding:85px 0}
+    .accordion-button{font-weight:700;color:#003c71}
+    .accordion-button:not(.collapsed){background:#e1f1fb;color:#003c71}
+
+    .commitment{text-align:center;color:#fff;background:linear-gradient(135deg,#003c71,#0068b5);padding:100px 5%}
+    .commitment .section-label{color:#8be8ff}
+    .commitment h2{max-width:800px;margin:0 auto 22px}
+    .commitment>p:last-child{max-width:650px;margin:auto;line-height:1.7;color:rgba(255,255,255,.9)}
+
+    .newsletter{background:#fff;padding:90px 0}
+    .newsletter-form{background:#f7f9fb;border:1px solid var(--border);border-radius:14px;box-shadow:0 14px 35px rgba(15,41,68,.08)}
+    .form-label,.form-check-label{font-weight:600}.form-control{min-height:48px;border-color:#8fa2b6}
+    .form-text{color:#536174}.form-status.success{color:#146c43;font-weight:700}
+
+    footer{padding:48px 5%;text-align:center;background:#002b49;color:#fff}
+    footer img{width:75px;filter:brightness(0) invert(1);margin-bottom:15px}
+    .footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin:16px 0}
+    .footer-nav a{color:#fff}.footer-note{color:rgba(255,255,255,.75);font-size:.85rem}
+
+    html[dir="rtl"] body{text-align:right}
+    html[dir="rtl"] .decoration-one{right:auto;left:-200px}
+    html[dir="rtl"] .decoration-two{right:auto;left:-70px}
+    html[dir="rtl"] .timeline{direction:rtl}
+    html[dir="rtl"] .year-badge{left:auto;right:20px}
+    html[dir="rtl"] .card-number{right:auto;left:22px}
+    html[dir="rtl"] .timeline-help{flex-direction:row-reverse}
+    html[dir="rtl"] footer,html[dir="rtl"] .footer-nav{direction:rtl}
+
+    @media(max-width:768px){
+      .hero{min-height:570px}.hero-content{padding:55px 0}.intel-logo{width:100px;margin-bottom:42px}
+      .hero h1{font-size:clamp(3rem,14vw,4.6rem);letter-spacing:-2px}.hero-description{font-size:1rem}
+      .timeline-intro{padding-top:70px}.timeline{flex-direction:column;overflow-x:visible;width:min(90%,560px);margin:auto;padding:20px 0 40px;scroll-snap-type:none}
+      .timeline-card{flex:none;width:100%;min-height:auto}.card-image{height:250px}.card-details{max-height:260px;opacity:1;transform:none;margin-top:18px}
+      .timeline-help{display:none}.project3-section,.faq-section,.newsletter{padding:70px 0}.commitment{padding:80px 7%}
+    }
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+  </style>
+</head>
+
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<div class="language-toolbar" aria-label="Language and layout controls">
+  <div class="container d-flex flex-wrap align-items-center justify-content-between gap-2 py-2">
+    <p class="mb-0 small"><i class="bi bi-translate" aria-hidden="true"></i> Localization preview</p>
+    <div class="btn-group btn-group-sm" role="group" aria-label="Preview text direction">
+      <button type="button" class="btn btn-outline-light active" data-language="en" aria-pressed="true">English · LTR</button>
+      <button type="button" class="btn btn-outline-light" data-language="ar" aria-pressed="false">العربية · RTL</button>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-content">
+    <img class="intel-logo" src="img/intel-header-logo.svg" alt="Intel">
+    <p class="eyebrow">INNOVATION FOR A BETTER FUTURE</p>
+    <h1>Sustainability <span>Through the Ages</span></h1>
+    <p class="hero-description">Explore Intel's journey through time and discover how decades of innovation are helping create a more responsible and sustainable future for technology and our planet.</p>
+    <a class="explore-button" href="#timeline">Explore the Journey ↓</a>
+  </div>
+  <div class="hero-decoration decoration-one" aria-hidden="true"></div>
+  <div class="hero-decoration decoration-two" aria-hidden="true"></div>
+</header>
+
+<main id="main-content">
+  <section class="timeline-intro" aria-labelledby="timeline-heading">
+    <p class="section-label">INTEL'S JOURNEY</p>
+    <h2 id="timeline-heading">Decades of Innovation</h2>
+    <p>From the founding of Intel in 1968 to ambitious sustainability commitments for the future, explore some of the moments that shaped Intel's technology and environmental journey.</p>
+  </section>
+
+  <section class="timeline" id="timeline" aria-label="Intel sustainability timeline">
+    <article class="timeline-card">
+      <div class="card-image"><img src="img/1968-intel-founded.jpg" alt="AI-generated illustration representing Intel's founding in 1968"><span class="year-badge">1968</span></div>
+      <div class="card-content"><p class="card-number">01</p><h2>1968</h2><h3>Intel Founded</h3><p class="card-summary">A new era of technology begins.</p><div class="card-details"><p>Robert Noyce and Gordon Moore rename the newly formed company NM Electronics to Intel Corporation, laying the foundation for decades of technological innovation.</p></div></div>
+    </article>
+    <article class="timeline-card">
+      <div class="card-image"><img src="img/1971-first-microprocessor.jpg" alt="AI-generated illustration representing Intel's first commercial microprocessor in 1971"><span class="year-badge">1971</span></div>
+      <div class="card-content"><p class="card-number">02</p><h2>1971</h2><h3>First Microprocessor</h3><p class="card-summary">Computing changes forever.</p><div class="card-details"><p>Intel debuts the 4004, the world's first commercial microprocessor, igniting the microprocessor revolution and propelling the future of computing devices.</p></div></div>
+    </article>
+    <article class="timeline-card">
+      <div class="card-image"><img src="img/1978-8086-processor.jpg" alt="AI-generated illustration representing Intel's 8086 processor in 1978"><span class="year-badge">1978</span></div>
+      <div class="card-content"><p class="card-number">03</p><h2>1978</h2><h3>8086 Processor</h3><p class="card-summary">The x86 architecture arrives.</p><div class="card-details"><p>Launch of the 8086 processor establishes the x86 architecture that drives countless PCs and servers in the modern era.</p></div></div>
+    </article>
+    <article class="timeline-card">
+      <div class="card-image"><img src="img/1985-386-processor.jpg" alt="AI-generated illustration representing Intel's 386 processor in 1985"><span class="year-badge">1985</span></div>
+      <div class="card-content"><p class="card-number">04</p><h2>1985</h2><h3>386 Processor</h3><p class="card-summary">Personal computing grows stronger.</p><div class="card-details"><p>Intel introduces the 386 processor with 32-bit architecture, ushering in a new era of performance and multitasking for personal computers.</p></div></div>
+    </article>
+    <article class="timeline-card">
+      <div class="card-image"><img src="img/2006-peak-ghg-emissions.jpg" alt="AI-generated illustration representing Intel's greenhouse gas emissions turning point in 2006"><span class="year-badge">2006</span></div>
+      <div class="card-content"><p class="card-number">05</p><h2>2006</h2><h3>Peak GHG Emissions</h3><p class="card-summary">A turning point for environmental action.</p><div class="card-details"><p>This year marks Intel's highest annual greenhouse gas emissions for operations. Intel subsequently invests heavily in chemical abatement, renewable energy and energy-efficient manufacturing.</p></div></div>
+    </article>
+    <article class="timeline-card">
+      <div class="card-image"><img src="img/2020-rise-strategy.jpg" alt="AI-generated illustration representing Intel's RISE sustainability strategy in 2020"><span class="year-badge">2020</span></div>
+      <div class="card-content"><p class="card-number">06</p><h2>2020</h2><h3>RISE Strategy</h3><p class="card-summary">Responsibility meets innovation.</p><div class="card-details"><p>Intel launches its RISE — Responsible, Inclusive, Sustainable and Enabling — strategy and 2030 goals, targeting climate action, water stewardship and waste reduction.</p></div></div>
+    </article>
+    <article class="timeline-card">
+      <div class="card-image"><img src="img/2022-net-zero-commitment.jpg" alt="AI-generated illustration representing Intel's net-zero by 2040 commitment announced in 2022"><span class="year-badge">2022</span></div>
+      <div class="card-content"><p class="card-number">07</p><h2>2022</h2><h3>Net-Zero by 2040</h3><p class="card-summary">An ambitious climate commitment.</p><div class="card-details"><p>Intel announces its commitment to achieve net-zero greenhouse gas emissions for Scope 1 and Scope 2 across its global operations by 2040.</p></div></div>
+    </article>
+    <article class="timeline-card">
+      <div class="card-image"><img src="img/2023-renewable-electricity.jpg" alt="AI-generated illustration representing Intel's renewable electricity progress in 2023"><span class="year-badge">2023</span></div>
+      <div class="card-content"><p class="card-number">08</p><h2>2023</h2><h3>Renewable Electricity</h3><p class="card-summary">Powering progress more responsibly.</p><div class="card-details"><p>Intel achieves 99% renewable electricity usage worldwide, helping lower carbon emissions and advancing the company's long-term sustainability goals.</p></div></div>
+    </article>
+    <article class="timeline-card">
+      <div class="card-image"><img src="img/2024-sustainability-summit.jpg" alt="AI-generated illustration representing Intel's Sustainability Summit in 2024"><span class="year-badge">2024</span></div>
+      <div class="card-content"><p class="card-number">09</p><h2>2024</h2><h3>Sustainability Summit</h3><p class="card-summary">Collaboration for the next generation.</p><div class="card-details"><p>Intel hosts its first Sustainability Summit, bringing suppliers, government officials and industry leaders together to collaborate on sustainable semiconductor manufacturing.</p></div></div>
+    </article>
+  </section>
+
+  <div class="timeline-help" aria-hidden="true"><span>←</span><p>Scroll to explore the timeline · Hover over a card to learn more</p><span>→</span></div>
+
+  <section class="project3-section" id="priorities" aria-labelledby="priorities-heading">
+    <div class="container">
+      <div class="section-heading">
+        <p class="section-label">GLOBAL IMPACT</p>
+        <h2 id="priorities-heading">Building a more responsible future</h2>
+        <p class="mx-auto">Bootstrap's responsive grid helps this section adapt cleanly from three desktop columns to a stacked mobile layout.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <article class="impact-card">
+            <i class="bi bi-droplet-half impact-icon" aria-hidden="true"></i>
+            <h3>Water Stewardship</h3>
+            <p>Technology manufacturing depends on water. Responsible stewardship means reducing use, restoring watersheds, and improving efficiency.</p>
+            <a class="btn btn-outline-primary learn-more" href="#newsletter">Learn More</a>
+          </article>
+        </div>
+        <div class="col-12 col-md-4">
+          <article class="impact-card">
+            <i class="bi bi-lightning-charge impact-icon" aria-hidden="true"></i>
+            <h3>Renewable Energy</h3>
+            <p>Increasing renewable electricity use can reduce operational emissions while supporting a more resilient energy future.</p>
+            <a class="btn btn-outline-primary learn-more" href="#newsletter">Learn More</a>
+          </article>
+        </div>
+        <div class="col-12 col-md-4">
+          <article class="impact-card">
+            <i class="bi bi-recycle impact-icon" aria-hidden="true"></i>
+            <h3>Circular Design</h3>
+            <p>Designing for efficiency, reuse, and waste reduction helps extend the value of materials across the technology lifecycle.</p>
+            <a class="btn btn-outline-primary learn-more" href="#newsletter">Learn More</a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section" aria-labelledby="faq-heading">
+    <div class="container">
+      <div class="section-heading">
+        <p class="section-label">LEVELUP: INTERACTIVITY</p>
+        <h2 id="faq-heading">Explore the sustainability journey</h2>
+        <p class="mx-auto">This Bootstrap accordion adds useful interaction without changing the original timeline.</p>
+      </div>
+      <div class="accordion mx-auto" id="intelAccordion" style="max-width:900px">
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">Why does renewable electricity matter?</button>
+          </h3>
+          <div id="faqOne" class="accordion-collapse collapse show" data-bs-parent="#intelAccordion">
+            <div class="accordion-body">Renewable electricity can lower operational emissions and support long-term decarbonization goals.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">What is the purpose of RTL localization?</button>
+          </h3>
+          <div id="faqTwo" class="accordion-collapse collapse" data-bs-parent="#intelAccordion">
+            <div class="accordion-body">RTL support helps interfaces adapt correctly for languages such as Arabic, including text flow, alignment, and element positioning.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">Why is accessibility part of localization?</button>
+          </h3>
+          <div id="faqThree" class="accordion-collapse collapse" data-bs-parent="#intelAccordion">
+            <div class="accordion-body">Global design should work for people using different languages, devices, keyboards, and assistive technologies.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="commitment">
+    <p class="section-label">LOOKING FORWARD</p>
+    <h2>Technology that helps build a better tomorrow.</h2>
+    <p>Intel's sustainability journey continues through innovation, collaboration and ambitious environmental goals.</p>
+  </section>
+
+  <section class="newsletter" id="newsletter" aria-labelledby="newsletter-heading">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5">
+          <p class="section-label">STAY INFORMED</p>
+          <h2 id="newsletter-heading">Sustainability Newsletter</h2>
+          <p class="newsletter-copy">Practice an accessible subscription experience with clear labels, validation, instructions, and status feedback.</p>
+        </div>
+        <div class="col-lg-7">
+          <form id="newsletter-form" class="newsletter-form p-4 p-md-5" novalidate>
+            <div class="mb-3">
+              <label for="subscriber-name" class="form-label">Name</label>
+              <input type="text" class="form-control" id="subscriber-name" name="name" autocomplete="name" required>
+              <div class="invalid-feedback">Please enter your name.</div>
+            </div>
+            <div class="mb-3">
+              <label for="subscriber-email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="subscriber-email" name="email" autocomplete="email" aria-describedby="email-help" required>
+              <div id="email-help" class="form-text">Educational demo only. No email address is sent or stored.</div>
+              <div class="invalid-feedback">Please enter a valid email address.</div>
+            </div>
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="checkbox" id="newsletter-consent" required>
+              <label class="form-check-label" for="newsletter-consent">I agree to test the newsletter subscription form.</label>
+              <div class="invalid-feedback">Please confirm before continuing.</div>
+            </div>
+            <button class="btn btn-primary px-4" type="submit">Subscribe</button>
+            <p id="form-status" class="form-status mt-3 mb-0" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <img src="img/intel-header-logo.svg" alt="Intel">
+    <p class="fw-bold">Sustainability Through the Ages</p>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="#timeline">Timeline</a><a href="#priorities">Sustainability</a><a href="#newsletter">Newsletter</a>
+    </nav>
+    <p class="footer-note mb-1">Educational project created for the Global Career Accelerator.</p>
+    <p class="footer-note mb-0">© 2026 Intel localization learning project.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+<script>
+  const rtlLanguages=new Set(["ar","arc","ckb","dv","fa","he","ku","ps","sd","ug","ur","yi"]);
+  const css=document.getElementById("bootstrap-css");
+  const ltr="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css";
+  const rtl="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.rtl.min.css";
+  const ltrIntegrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB";
+  const rtlIntegrity="sha384-CfCrinSRH2IR6a4e6fy2q6ioOX7O6Mtm1L9vRvFZ1trBncWmMePhzvafv7oIcWiW";
+  function normalize(lang){return (lang||"en").toLowerCase().split("-")[0]}
+  function applyLanguage(lang){
+    const code=normalize(lang),isRtl=rtlLanguages.has(code),root=document.documentElement;
+    root.lang=code;root.dir=isRtl?"rtl":"ltr";
+    css.href=isRtl?rtl:ltr;css.integrity=isRtl?rtlIntegrity:ltrIntegrity;
+    document.querySelectorAll("[data-language]").forEach(btn=>{
+      const on=normalize(btn.dataset.language)===code;
+      btn.classList.toggle("active",on);btn.setAttribute("aria-pressed",String(on));
+    });
+  }
+  document.querySelectorAll("[data-language]").forEach(btn=>btn.addEventListener("click",()=>applyLanguage(btn.dataset.language)));
+  applyLanguage(document.documentElement.lang||navigator.language);
+  new MutationObserver(m=>{if(m.some(x=>x.attributeName==="lang"))applyLanguage(document.documentElement.lang)})
+    .observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+
+  const form=document.getElementById("newsletter-form"),status=document.getElementById("form-status");
+  form.addEventListener("submit",e=>{
+    e.preventDefault();
+    if(!form.checkValidity()){
+      form.classList.add("was-validated");status.classList.remove("success");
+      status.textContent="Please complete the required fields before continuing.";return;
+    }
+    status.classList.add("success");
+    status.textContent="Demo complete — the form passed validation. No email address was sent or stored.";
+    form.reset();form.classList.remove("was-validated");
+  });
+</script>
+</body>
+</html>
